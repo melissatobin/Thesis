@@ -9,25 +9,53 @@ output:
 
 
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```r
+library(tidyverse)
+```
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```
+## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+```
+
+```
+## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
+## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
+## ✔ readr   1.1.1     ✔ forcats 0.3.0
+```
+
+```
+## ── Conflicts ────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+```
+
+## Reading in data
 
 
 ```r
-summary(cars)
+gps_data <- read_csv("/Volumes/hkr-storage/Research/dfuller/Walkabilly/people/Melissa Tobin/Thesis/coordinates.csv")
 ```
 
 ```
-##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
+## Parsed with column specification:
+## cols(
+##   uuid = col_character(),
+##   id = col_integer(),
+##   latitude = col_double(),
+##   longitude = col_double(),
+##   altitude = col_double(),
+##   speed = col_double(),
+##   direction = col_character(),
+##   h_accuracy = col_double(),
+##   v_accuracy = col_double(),
+##   acceleration_x = col_integer(),
+##   acceleration_y = col_integer(),
+##   acceleration_z = col_integer(),
+##   mode_detected = col_character(),
+##   timestamp = col_character()
+## )
 ```
 
 ## Including Plots
