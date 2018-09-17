@@ -6,27 +6,88 @@ output:
       html_document:
         keep_md: true
 ---
+## Knit File
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Install and load packages
+
 ```{r}
 library(tidyverse)
+library(dplyr)
+
 ```
 
 ## Reading in data
 
 ```{r}
-gps_data <- read_csv("/Volumes/hkr-storage/Research/dfuller/Walkabilly/people/Melissa Tobin/Thesis/coordinates.csv")
+gps_data <- read_csv("coordinates.csv")
+cchs <- read_csv("/Volumes/hkr-storage/Research/dfuller/Walkabilly/people/Melissa Tobin/HKR6130_MUN-master/cchs.csv")
 ```
 
-## Including Plots
+# HKR 6130 - Week 8 Tutorial - GPS
+## Read in GPS Data
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+gps <- read_csv("/Volumes/hkr-storage/Research/dfuller/Walkabilly/people/Melissa Tobin/HKR6130_MUN-master/gps_user1.csv")
+gps <- gps[order(gps$uuid),]
+head(gps)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Add new variable to GPS dataset
+
+```{r}
+gps$timestamp2 <- as.Date(as.factor(gps$timestamp))
+```
+
+## Unique participant in GPS data
+
+```{r}
+users <- unique(gps$uuid)
+table(users)
+```
+
+## Exploring participant data
+
+```{r}
+day_1 <- "2017-07-14"
+user <- "DFuller"
+user_ij <- filter(gps, gps$timestamp2 == day_1)
+```
+
+## Plotting the altitude record
+
+```{r}
+ggplot(data = user_ij, aes(x = timestamp, y = altitude)) +
+  geom_point()+
+  geom_line(aes(group = 1)) +
+  theme(axis.ticks.x = element_blank(), 
+        axis.text.x = element_blank(),
+        axis.title.x = element_blank()) +
+  labs(y = "Altitude")
+
+```
+
+## PLot the speed at each GPS Location 
+
+```{r}
+ggplot(data = user_ij, aes(x = timestamp, y = speed)) +
+  geom_point() +
+  geom_line(aes(group = 1)) +
+  theme(axis.ticks.x = element_blank(), 
+        axis.text.x = element_blank(),
+        axis.title.x = element_blank()) +
+  labs(y = "speed")
+```
+
+## Plot the GPS Points without a map background
+
+```{r}
+title = paste("Activity route of participant\n", as.character(user) , "\n", "on day", day_1, sep = " ")
+ggplot()+
+  geom_point(data = user_ij, aes(x = longitude, y = latitude), size = 1.5, color = "red") +
+  labs(title = title, x = "Longitude", y = "Latitude")
+```
+
